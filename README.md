@@ -19,14 +19,14 @@ Oracle Express Edition 11g Release 2 on Ubuntu 18.04 LTS
 
 ## Installation(Local)
 ```
-git clone https://github.com/wnameless/docker-oracle-xe-11g.git
+git clone https://github.com/domiq44/docker-oracle-xe-11g.git
 cd docker-oracle-xe-11g
-docker build -t wnameless/oracle-xe-11g .
+docker build -t domiq44/oracle-xe-11g .
 ```
 
 ## Installation(DockerHub)
 ```
-docker pull wnameless/oracle-xe-11g-r2
+docker pull domiq44/oracle-xe-11g
 ```
 SSH server has been removed since 18.04, please use "docker exec"
 
@@ -34,27 +34,27 @@ SSH server has been removed since 18.04, please use "docker exec"
 
 Run with 1521 port opened:
 ```
-docker run -d -p 49161:1521 wnameless/oracle-xe-11g-r2
+docker run -d --name db-oracle-11g -p 49161:1521 domiq44/oracle-xe-11g
 ```
 
 Run this, if you want the database to be connected remotely:
 ```
-docker run -d -p 49161:1521 -e ORACLE_ALLOW_REMOTE=true wnameless/oracle-xe-11g-r2
+docker run -d --name db-oracle-11g -p 49161:1521 -e ORACLE_ALLOW_REMOTE=true domiq44/oracle-xe-11g
 ```
 
 For performance concern, you may want to disable the disk asynch IO:
 ```
-docker run -d -p 49161:1521 -e ORACLE_DISABLE_ASYNCH_IO=true wnameless/oracle-xe-11g-r2
+docker run -d --name db-oracle-11g -p 49161:1521 -e ORACLE_DISABLE_ASYNCH_IO=true domiq44/oracle-xe-11g
 ```
 
 Enable XDB user with default password: xdb, run this:
 ```
-docker run -d -p 49161:1521 -e ORACLE_ENABLE_XDB=true wnameless/oracle-xe-11g-r2
+docker run -d --name db-oracle-11g -p 49161:1521 -e ORACLE_ENABLE_XDB=true domiq44/oracle-xe-11g
 ```
 
 For APEX user:
 ```
-docker run -d -p 49161:1521 -p 8080:8080 wnameless/oracle-xe-11g-r2
+docker run -d --name db-oracle-11g -p 49161:1521 -p 8080:8080 domiq44/oracle-xe-11g
 ```
 
 ```
@@ -63,9 +63,9 @@ username: ADMIN
 password: admin
 ```
 
-For latest APEX(18.1) user, please pull wnameless/oracle-xe-11g-r2:18.04-apex first:
+For latest APEX(18.1) user, please pull domiq44/oracle-xe-11g:18.04-apex first:
 ```
-docker run -d -p 49161:1521 -p 8080:8080 wnameless/oracle-xe-11g:18.04-apex
+docker run -d --name db-oracle-11g -p 49161:1521 -p 8080:8080 domiq44/oracle-xe-11g:18.04-apex
 ```
 
 ```
@@ -92,7 +92,7 @@ oracle
 Support custom DB Initialization and running shell scripts
 ```
 # Dockerfile
-FROM wnameless/oracle-xe-11g-r2
+FROM domiq44/oracle-xe-11g
 
 ADD init.sql /docker-entrypoint-initdb.d/
 ADD script.sh /docker-entrypoint-initdb.d/
